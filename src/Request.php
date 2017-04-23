@@ -3,7 +3,6 @@ namespace GuzzleHttp\Psr7;
 
 use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -26,14 +25,14 @@ class Request implements RequestInterface
      * @param string                               $method  HTTP method
      * @param string|UriInterface                  $uri     URI
      * @param array                                $headers Request headers
-     * @param string|null|resource|StreamInterface $body    Request body
+     * @param string|null                          $body    Request body
      * @param string                               $version Protocol version
      */
     public function __construct(
         $method,
         $uri,
         array $headers = [],
-        $body = null,
+        ?string $body = null,
         $version = '1.1'
     ) {
         if (!($uri instanceof UriInterface)) {
@@ -47,10 +46,6 @@ class Request implements RequestInterface
 
         if (!$this->hasHeader('Host')) {
             $this->updateHostFromUri();
-        }
-
-        if ($body !== '' && $body !== null) {
-            $this->stream = stream_for($body);
         }
     }
 
