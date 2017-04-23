@@ -1,4 +1,4 @@
-<?php
+<?hh // partial
 namespace GuzzleHttp\Psr7;
 
 use Psr\Http\Message\UriInterface;
@@ -28,6 +28,7 @@ final class UriResolver
 
         $results = [];
         $segments = explode('/', $path);
+        $segment = null;
         foreach ($segments as $segment) {
             if ($segment === '..') {
                 array_pop($results);
@@ -41,7 +42,7 @@ final class UriResolver
         if ($path[0] === '/' && (!isset($newPath[0]) || $newPath[0] !== '/')) {
             // Re-add the leading slash if necessary for cases like "/.."
             $newPath = '/' . $newPath;
-        } elseif ($newPath !== '' && ($segment === '.' || $segment === '..')) {
+        } elseif ($newPath !== '' && !is_null($segment) && ($segment === '.' || $segment === '..')) {
             // Add the trailing slash if necessary
             // If newPath is not empty, then $segment must be set and is the last segment from the foreach
             $newPath .= '/';
