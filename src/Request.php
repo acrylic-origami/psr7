@@ -13,31 +13,28 @@ class Request implements RequestInterface
     use MessageTrait;
 
     /** @var string */
-    private $method;
+    private string $method;
 
     /** @var null|string */
-    private $requestTarget;
+    private ?string $requestTarget = null;
 
     /** @var UriInterface */
-    private $uri;
+    private UriInterface $uri;
 
     /**
      * @param string                               $method  HTTP method
-     * @param string|UriInterface                  $uri     URI
+     * @param UriInterface                         $uri     URI
      * @param array                                $headers Request headers
      * @param string|null                          $body    Request body
      * @param string                               $version Protocol version
      */
     public function __construct(
-        $method,
-        $uri,
-        array $headers = [],
+        string $method,
+        UriInterface $uri,
+        array<string, string> $headers = [],
         ?string $body = null,
-        $version = '1.1'
+        string $version = '1.1'
     ) {
-        if (!($uri instanceof UriInterface)) {
-            $uri = new Uri($uri);
-        }
 
         $this->method = strtoupper($method);
         $this->uri = $uri;

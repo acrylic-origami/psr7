@@ -20,7 +20,7 @@ class Uri implements UriInterface
      */
     const HTTP_DEFAULT_HOST = 'localhost';
 
-    private static $defaultPorts = [
+    private static array<string, int> $defaultPorts = [
         'http'  => 80,
         'https' => 443,
         'ftp' => 21,
@@ -39,30 +39,30 @@ class Uri implements UriInterface
     private static $replaceQuery = ['=' => '%3D', '&' => '%26'];
 
     /** @var string Uri scheme. */
-    private $scheme = '';
+    private string $scheme = '';
 
     /** @var string Uri user info. */
-    private $userInfo = '';
+    private string $userInfo = '';
 
     /** @var string Uri host. */
-    private $host = '';
+    private string $host = '';
 
     /** @var int|null Uri port. */
-    private $port;
+    private ?int $port;
 
     /** @var string Uri path. */
-    private $path = '';
+    private string $path = '';
 
     /** @var string Uri query string. */
-    private $query = '';
+    private string $query = '';
 
     /** @var string Uri fragment. */
-    private $fragment = '';
+    private string $fragment = '';
 
     /**
      * @param string $uri URI to parse
      */
-    public function __construct($uri = '')
+    public function __construct(string $uri = '')
     {
         // weak type check to also accept null until we can add scalar type hints
         if ($uri != '') {
